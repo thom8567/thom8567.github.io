@@ -1,4 +1,24 @@
-.start {
-  color: aqua;
+.content {
+  color: black;
   font-size: 16px;
+  min-height: calc(100vh - 70px);
 }
+.contact_info {
+  color: black;
+  font-size: 12px;
+
+}
+.footer {
+  background-color: gray;
+  height: 70px;
+}
+.data {
+  padding-left: 10px;
+}
+caption{
+  text-align: left;
+}
+body {
+  background-color: lightgray;
+}
+
