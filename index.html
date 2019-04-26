@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome!</title>
+</head>
+<body>
+    <form action="/my-form-handling-page" method="post">
+        <div>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="user_name" maxlength="40" required>
+        </div>
+        <div>
+            <label for="mail">E-mail:</label>
+            <input type="email" id="mail" name="user_mail" maxlength="100" required>
+        </div>
+        <div>
+            <label for="phoneNumber">Mobile Phone Number:</label>
+            <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="07222123456"
+                   pattern="^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$">
+        </div>
+        <div>
+            <!-- drown down multi choice one answe -->
+            <label for="question1">1. What are the bright lights that appear at night in the sky called?</label>
+            <select id="question1" name="question1">
+                <option value="stars">Stars</option> <!-- answer -->
+                <option value="streetlight">Streetlights</option>
+                <option value="aeroplane">Aeroplane</option>
+                <option value="satellites">Satellites</option>
+            </select>
+        </div>
+        <div>
+            <!-- radio buttons multi choice single answer -->
+            <img src="assets/tiger.jpg" alt="Apex Jungle Predator">
+            <label>2. What is the name of this animal?</label>
+            <input type="radio" name="animal" value="lion">Lion <br/>
+            <input type="radio" name="animal" value="tiger">Tiger <br/> <!-- answer -->
+            <input type="radio" name="animal" value="elephant">Elephant <br/>
+            <input type="radio" name="animal" value="duck">Duck <br/>
+        </div>
+        <div>
+            <!-- dropdown multi choice multi answer -->
+            <label for="question3">3. Which car brands does Volkswagen own, apart from Volkswagen?</label>
+            <select id="question3" name="question3">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="audi">Audi</option> <!-- answer -->
+                <option value="lamborghini">Lamborghini</option> <!-- answer -->
+                <option value="bmw">BMW</option>
+            </select>
+        </div>
+        <div>
+            <!-- checkbox multi choice one answer -->
+            <!-- this needs code to force it to only be able to use one checkbox, this will be done below -->
+            <label>4. Which European capital is known as ‘The City of the Seven Hills’?</label>
+            <input type="checkbox" name="city" value="berlin">Berlin <br/>
+            <input type="checkbox" name="city" value="rome">Rome <br/> <!-- answer -->
+            <input type="checkbox" name="city" value="london">London <br/>
+            <input type="checkbox" name="city" value="paris">Paris <br/>
+            <input type="checkbox" name="city" value="madrid">Madrid <br/>
+        </div>
+        <div>
+            <!-- checkbox multi choice multi answer -->
+            <label>5. What are the places called on each pole of the Earth?</label>
+            <input type="checkbox" name="city" value="arctic">Arctic <br/> <!-- answer -->
+            <input type="checkbox" name="city" value="north_america">North America <br/>
+            <input type="checkbox" name="city" value="europe">Antarctic <br/> <!-- answer -->
+            <input type="checkbox" name="city" value="south_american">South America <br/>
+            <input type="checkbox" name="city" value="asia">Asia <br/>
+        </div>
+        <div>
+            <label for="question6">6. What is the name of the presidential house in the USA?</label>
+            <input type="text" id="question6" name="question6"> <br/> <!-- must contain specific string -->
+        </div>
+        <div>
+            <label for="question7">7. Who was the first president of the USA?</label>
+            <input type="text" id="question7" name="question7"> <br/> <!-- must be specific string -->
+        </div>
+        <div>
+            <label for="question8">8. What number is bigger than (10 + 10) ^ 2</label>
+            <input type="number" id="question8" name="question8"> <br/> <!-- must be higher than 400 -->
+        </div>
+        <div>
+            <label for="question9">9. What is your favourite browser?</label> <!-- datalist -->
+            <input list="browsers" id="question9" name="question9">
+            <datalist id="browsers">
+                <option value="Internet Explorer">
+                <option value="Microsoft Edge">
+                <option value="Google Chrome">
+                <option value="Mozilla Firefox">
+            </datalist>
+        </div>
+        <div>
+            <form action="/my-form-handling-page" method="post" oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+                <label for="slider">10. What is 100 + 50?</label>
+                <input id="slider" type="range" name="b" value="50" /> +
+                <input type="number" name="a" value="10" /> =
+                <output name="result">60</output>
+            </form>
+        </div>
+    </form>
+</body>
+
+</html>
