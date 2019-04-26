@@ -5,8 +5,8 @@
     <title>Welcome!</title>
 </head>
 <body>
-    <form oninput="result.value=parseInt(a.value)+parseInt(b.value); resultTwo.value=parseInt(d.value)+parseInt(c.value)"
-          action="/my-form-handling-page" method="post">
+<!-- oninput="result.value=parseInt(a.value)+parseInt(b.value); resultTwo.value=parseInt(d.value)+parseInt(c.value)" -->
+    <form action="/my-form-handling-page" method="post">
         <h1>Welcome to my Quiz!</h1>
         <h2>Please fill out your information below:</h2>
         <div>
@@ -111,12 +111,30 @@
         <input type="submit" value="Submit"/><br/>
         <input type="reset" value="Reset" />
     </form>
-    <button onclick="showAlert()">Show Alert!</button><br/>
+    <button id="alertButton">Show Alert!</button><br/>
 
     <script>
+
         function showAlert(){
-          alert("THIS IS AN ALERT!")
+          alert("THIS IS AN ALERT!");
         }
+
+        function createHandler(rangeSelector, inputSelector, outputSelector){
+          var range = document.querySelector(rangeSelector);
+          var input = document.querySelector(inputSelector);
+          var output = document.querySelector(outputSelector);
+
+          function handleUpdate(){
+            output.value = parseInt(range.value) + parseInt(input.value);
+          }
+          range.oninput = handleUpdate;
+          input.oninput = handleUpdate;
+        }
+
+        document.getElementById("alertButton").addEventListener("click", showAlert);
+        createHandler('input[name="b"]', 'input[name="a"]', 'output[name="result"]');
+        createHandler('input[name="c"]', 'input[name="d"]', 'output[name="resultTwo"]');
+
     </script>
 
 </body>
