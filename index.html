@@ -104,7 +104,7 @@
         <div>
             <label>11. What is 500 + 100?</label> <br/>
             <input type="range" min="0" max="1000" name="sliderTwo" value="100" /> +
-            <input type="number" name="numberInputTwo" value="500" /> =
+            <input type="number" name="numberInputTwo" value="500" min="0" /> =
             <output id="resultTwo" name="resultTwo">600</output>
         </div>
 
@@ -125,6 +125,9 @@
           var output = document.querySelector(outputSelector);
 
           function handleUpdate(){
+            if ( isNaN(parseInt(input.value)) ){
+              input.value = 0;
+            }
             output.value = parseInt(range.value) + parseInt(input.value);
           }
           range.oninput = handleUpdate;
