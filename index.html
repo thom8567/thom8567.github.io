@@ -11,16 +11,16 @@
         <h2>Please fill out your information below:</h2>
         <div>
             <label for="name">Full Name:</label> <br/>
-            <input type="text" id="name" name="user_name" maxlength="40" autocomplete="name" required>
+            <input type="text" id="name" name="fullName" maxlength="40" autocomplete="name" required>
         </div>
         <div>
             <label for="mail">E-mail:</label> <br/>
-            <input type="email" id="mail" name="user_email" maxlength="100" autocomplete="email" required>
+            <input type="email" id="mail" name="email" maxlength="100" autocomplete="email" required>
         </div>
         <div>
             <label for="phoneNumber">Mobile Phone Number:</label> <br/>
             <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="07222123456"
-                   pattern="^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$">
+                   pattern="^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$" required>
         </div>
         <h2>Quiz:</h2>
         <div>
@@ -37,10 +37,10 @@
             <!-- radio buttons multi choice single answer -->
             <img src="assets/tiger.jpg" alt="Apex Jungle Predator"> <br/>
             <label>2. What is the name of this animal?</label> <br/>
-            <input type="radio" name="animal" value="Lion">Lion <br/>
-            <input type="radio" name="animal" value="Tiger">Tiger <br/> <!-- answer -->
-            <input type="radio" name="animal" value="Elephant">Elephant <br/>
-            <input type="radio" name="animal" value="Duck">Duck <br/>
+            <input type="radio" name="question2" value="Lion">Lion <br/>
+            <input type="radio" name="question2" value="Tiger">Tiger <br/> <!-- answer -->
+            <input type="radio" name="question2" value="Elephant">Elephant <br/>
+            <input type="radio" name="question2" value="Duck">Duck <br/>
         </div>
         <div>
             <!-- dropdown multi choice multi answer -->
@@ -58,20 +58,20 @@
             <!-- checkbox multi choice one answer -->
             <!-- this needs code to force it to only be able to use one checkbox, this will be done below -->
             <label>4. Which European capital is known as ‘The City of the Seven Hills’?</label> <br/>
-            <input type="checkbox" name="city[]" value="Berlin">Berlin <br/>
-            <input type="checkbox" name="city[]" value="Rome">Rome <br/> <!-- answer -->
-            <input type="checkbox" name="city[]" value="London">London <br/>
-            <input type="checkbox" name="city[]" value="Paris">Paris <br/>
-            <input type="checkbox" name="city[]" value="Madrid">Madrid <br/>
+            <input type="checkbox" name="question4[]" value="Berlin">Berlin <br/>
+            <input type="checkbox" name="question4[]" value="Rome">Rome <br/> <!-- answer -->
+            <input type="checkbox" name="question4[]" value="London">London <br/>
+            <input type="checkbox" name="question4[]" value="Paris">Paris <br/>
+            <input type="checkbox" name="question4[]" value="Madrid">Madrid <br/>
         </div>
         <div>
             <!-- checkbox multi choice multi answer -->
             <label>5. What are the places called on each pole of the Earth?</label> <br/>
-            <input type="checkbox" name="pole[]" value="Arctic">Arctic <br/> <!-- answer -->
-            <input type="checkbox" name="pole[]" value="North America">North America <br/>
-            <input type="checkbox" name="pole[]" value="Antarctic">Antarctic <br/> <!-- answer -->
-            <input type="checkbox" name="pole[]" value="South America">South America <br/>
-            <input type="checkbox" name="pole[]" value="Asia">Asia <br/>
+            <input type="checkbox" name="question5[]" value="Arctic">Arctic <br/> <!-- answer -->
+            <input type="checkbox" name="question5[]" value="North America">North America <br/>
+            <input type="checkbox" name="question5[]" value="Antarctic">Antarctic <br/> <!-- answer -->
+            <input type="checkbox" name="question5[]" value="South America">South America <br/>
+            <input type="checkbox" name="question5[]" value="Asia">Asia <br/>
         </div>
         <div>
             <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>

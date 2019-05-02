@@ -8,15 +8,122 @@
 <body>
 
     <?php
+
         echo "<p>Welcome to PHP</p>";
 
         //Declaring a score keeping variable
-
         $quizScore = 0;
 
+        //Making sure that POST is correct and is an array
+        $answers = ( array ) ( $_POST ?? [] );
+
+        print_r($answers);
+
+        $rules = [
+            'fullName' => [
+                'required' => true,
+                'pattern' => "/^[a-z ,.\'-]+$/i",
+            ],
+            'emailAddress' => [
+                'required' => true,
+                'email'    => true,
+            ],
+            'phoneNumber'  => [
+                'required'    => true,
+                'phoneNumber' => true,
+            ],
+            'question1' => [
+                'correctAnswer' => 'Stars',
+                'answerNeeded'  => false,
+            ],
+            'question2' => [
+                'correctAnswer' => 'Tiger',
+                'answerNeeded'  => true,
+            ],
+            'question3' => [
+                'correctChoices' => ['Audi', 'Lamborghini'],
+                'answerNeeded'   => true,
+            ],
+            'question4' => [
+                'correctChoices' => ['Rome'],
+                'answerNeeded'   => true,
+            ],
+            'question5' => [
+                'correctChoices' => ['Arctic', 'Antarctic'],
+                'answerNeeded'   => true,
+            ],
+            'question6' => [
+                'correctAnswer' => 'Whitehouse',
+                'answerNeeded'  => true,
+            ],
+            'question7' => [
+                'correctAnswer' => 'George Washington',
+                'answerNeeded'  => true,
+            ],
+            'question8' => [
+                'correctAnswer' => 400,
+                'answerNeeded'  => true,
+            ],
+            'question9' => [
+                'answerNeeded' => true
+            ],
+            'question10' => [
+                'correctAnswer' => 150,
+                'answerNeeded'  => true,
+            ],
+            'question11' => [
+                'correctAnswer' => 600,
+                'answerNeeded'  => true,
+            ]
+        ];
+
+        $errors = [];
+
+        function validate($answers, $key, array $ruleSet){
+            try {
+                if ( isset($ruleSet['required']) && $ruleSet['required'] ){
+                    assertFilledOut( $answers, $key );
+                }
+                if ( isset($ruleSet['answerNeeded']) && $ruleSet['answerNeeded'] ){
+                    assertAnswered( $answers, $key );
+                }
+                if ( isset($ruleSet['correctChoices']) && is_array($ruleSet['correctChoices']) ){
+                    assertCheckAnswer($answers, $key, $ruleSet['correctChoices']);
+                }
+
+            } catch ( \Exception $exception ) {
+                return $exception -> getMessage();
+            }
+        }
+
+        //Check if question is answered
+        function assertFilledOut( array $answers, $key ){
+            //Get question from answers array and return true/false depending on whether set or not
+            if ( !isset($answers[$key]) ){
+                throw new \Exception('Required field has not been filled in');
+            }
+        }
+
+        function assertAnswered( array $answers, $key ){
+            if( !isset($answers[$key]) ){
+                throw new \Exception('Question has not been answered');
+            }
+        }
+
+        function assertCheckAnswer( array $answers, $key, array $choices ){
+            //Get user's answer from array
+            if ( !in_array($answers[$key], $choices) ){
+                throw new \Exception( 'Incorrect' );
+            }
+
+        }
+
+        echo "<div> $quizScore </div>";
+
+
         //Validation on the user's full name
-        if ( isset($_POST['user_name']) ){
-            $fullName = $_POST['user_name'];
+        if ( isset($_POST['fullName']) ){
+            $fullName = $_POST['fullName'];
             if ( !preg_match("/^[a-z ,.\'-]+$/i", $fullName)){
                 echo "<div> Invalid name given </div>";
             } else {
@@ -26,9 +133,10 @@
             echo "<div> No name has been entered </div>";
         };
 
+
         //Validation on the user's email
-        if ( isset($_POST['user_email'])){
-            $emailAddress = $_POST['user_email'];
+        if ( isset($_POST['email'])){
+            $emailAddress = $_POST['email'];
             if ( !filter_var($emailAddress, FILTER_VALIDATE_EMAIL) ){
                 echo "<div> Email address not valid </div>";
             } else {
@@ -65,8 +173,8 @@
         };
 
         //Validation on Q2 - can be empty so isset is needed
-        if ( isset($_POST['animal']) ){
-            $question2 = $_POST['animal'];
+        if ( isset($_POST['question2']) ){
+            $question2 = $_POST['question2'];
             if ($question2 === 'Tiger'){
                 echo "<div> <b>Question 2 Answer:</b> <br/> $question2 </div>";
                 echo "<div> <b>Result:</b> <br/> Correct <hr></div>";
@@ -99,8 +207,8 @@
         };
 
         //Validation on Q4 - multi choice check box, one answer
-        if ( isset($_POST['city']) ){
-            $question4 = $_POST['city'];
+        if ( isset($_POST['question4']) ){
+            $question4 = $_POST['question4'];
             $answers = ['Rome'];
             $question4Answers = array_intersect($question4, $answers);
             if ($question4Answers === $answer){
@@ -117,8 +225,8 @@
         };
 
         //Validation on Q5 - multi choice check box, two answers
-        if ( isset($_POST['pole']) ){
-            $question5 = $_POST['pole'];
+        if ( isset($_POST['question5']) ){
+            $question5 = $_POST['question5'];
             $answers = ['Arctic', 'Antarctic'];
             $question5Answers = array_intersect($question5, $answers);
             if ($question5Answers === $answers){
@@ -219,10 +327,6 @@
             echo "<div> <b>Result:</b> <br/> Incorrect <hr></div>";
             $quizScore -= 1;
         };
-        echo "<pre>";
-        print_r($_POST);
-        print_r($_SERVER);
-        echo "</pre>";
     ?>
 
     <div>
