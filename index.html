@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome!</title>
+
+    <link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 <!-- oninput="result.value=parseInt(a.value)+parseInt(b.value); resultTwo.value=parseInt(d.value)+parseInt(c.value)" -->
@@ -15,7 +19,7 @@
         </div>
         <div>
             <label for="mail">E-mail:</label> <br/>
-            <input type="email" id="mail" name="email" maxlength="100" autocomplete="email" required>
+            <input type="email" id="mail" name="emailAddress" maxlength="100" autocomplete="email" required>
         </div>
         <div>
             <label for="phoneNumber">Mobile Phone Number:</label> <br/>
@@ -82,8 +86,8 @@
             <input type="text" id="question7" name="question7"> <br/> <!-- must be specific string -->
         </div>
         <div>
-            <label for="question8">8. What number is bigger than (10 + 10) ^ 2</label> <br/>
-            <input type="number" id="question8" name="question8"> <br/> <!-- must be higher than 400 -->
+            <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
+            <input type="number" step="1" id="question8" name="question8"> <br/> <!-- must be higher than 400 -->
         </div>
         <div>
             <label for="question9">9. What is your favourite browser?</label> <br/> <!-- datalist -->
@@ -97,14 +101,14 @@
         </div>
         <div>
             <label>10. What is 100 + 50?</label> <br/>
-            <input type="range" min="0" max="1000" name="sliderOne" value="50" /> +
-            <input type="number" name="numberInputOne" value="10" /> =
+            <input type="range" min="0" max="1000" name="question10[range]" value="50" /> +
+            <input type="number" name="question10[number]" value="10" /> =
             <output id="result" name="result">60</output>
         </div>
         <div>
             <label>11. What is 500 + 100?</label> <br/>
-            <input type="range" min="0" max="1000" name="sliderTwo" value="100" /> +
-            <input type="number" name="numberInputTwo" value="500" min="0" /> =
+            <input type="range" min="0" max="1000" name="question11[range]" value="100" /> +
+            <input type="number" name="question11[number]" value="500" min="0" /> =
             <output id="resultTwo" name="resultTwo">600</output>
         </div>
 
@@ -135,8 +139,8 @@
         }
 
         document.getElementById("alertButton").addEventListener("click", showAlert);
-        createHandler('input[name="sliderOne"]', 'input[name="numberInputOne"]', 'output[name="result"]');
-        createHandler('input[name="sliderTwo"]', 'input[name="numberInputTwo"]', 'output[name="resultTwo"]');
+        createHandler('input[name="question10[range]"]', 'input[name="question10[number]"]', 'output[name="result"]');
+        createHandler('input[name="question11[range]"]', 'input[name="question11[number]"]', 'output[name="resultTwo"]');
 
     </script>
 
