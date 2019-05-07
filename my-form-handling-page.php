@@ -189,10 +189,8 @@
         foreach ( $questionKeys as $questionNumber ){
             $response = $errors[$questionNumber];
             $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
-            //CURRENTLY NOT VALIDATING AGAINST DOUBLE DIGITS CORRECTLY
-
-            $questionNumber = preg_replace('/(?<!\ )[0-9]/', ' $0', $questionNumber);
-            $questionNumber = preg_replace('/(?<!\ )[0-9][0-9]/', ' $0', $questionNumber);
+            
+            $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
 
             $questionNumber = ucwords($questionNumber);
             echo "<div> <b>$questionNumber</b> <br/> $response <hr/> </div>";
