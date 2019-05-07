@@ -189,17 +189,13 @@
         foreach ( $questionKeys as $questionNumber ){
             $response = $errors[$questionNumber];
             $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
-            
+
             $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
 
             $questionNumber = ucwords($questionNumber);
             echo "<div> <b>$questionNumber</b> <br/> $response <hr/> </div>";
         }
-
-//        echo "<pre>";
-//        print_r($answers);
-//        print_r($errors);
-//        echo "</pre>";
+        
     ?>
 
     <div>
