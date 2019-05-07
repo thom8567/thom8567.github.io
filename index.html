@@ -9,7 +9,6 @@
 
 </head>
 <body>
-<!-- oninput="result.value=parseInt(a.value)+parseInt(b.value); resultTwo.value=parseInt(d.value)+parseInt(c.value)" -->
     <form action="/my-form-handling-page.php" method="post">
         <h1>Welcome to my Quiz!</h1>
         <h2>Please fill out your information below:</h2>
@@ -22,75 +21,70 @@
             <input type="email" id="mail" name="emailAddress" maxlength="100" autocomplete="email" required>
         </div>
         <div>
-            <label for="phoneNumber">Mobile Phone Number:</label> <br/>
-            <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="07222123456"
-                   pattern="^((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\#(\d{4}|\d{3}))?$" required>
+            <label for="phoneNumber">Mobile Phone Number (UK Numbers Only - e.g. 01234567891):</label> <br/>
+            <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="01234567891" required>
         </div>
         <h2>Quiz:</h2>
         <div>
-            <!-- drop down multi choice one answer -->
             <label for="question1">1. What are the bright lights that appear at night in the sky called?</label> <br/>
             <select id="question1" name="question1">
-                <option value="Stars">Stars</option> <!-- answer -->
+                <option value="Stars">Stars</option>
                 <option value="Streetlight">Streetlights</option>
                 <option value="Aeroplane">Aeroplane</option>
                 <option value="Satellites">Satellites</option>
             </select>
         </div>
         <div>
-            <!-- radio buttons multi choice single answer -->
-            <img src="assets/tiger.jpg" alt="Apex Jungle Predator"> <br/>
+            <img src="assets/tiger.jpg"
+                 alt="An apex predator that lives in the Jungle. It is orange and has a stripey pattern to help it blend in."> <br/>
             <label>2. What is the name of this animal?</label> <br/>
             <input type="radio" name="question2" value="Lion">Lion <br/>
-            <input type="radio" name="question2" value="Tiger">Tiger <br/> <!-- answer -->
+            <input type="radio" name="question2" value="Tiger">Tiger <br/>
             <input type="radio" name="question2" value="Elephant">Elephant <br/>
             <input type="radio" name="question2" value="Duck">Duck <br/>
         </div>
         <div>
-            <!-- dropdown multi choice multi answer -->
             <!-- needs code to allow multiple to be selected without holding down ctrl -->
             <label for="question3">3. Which car brands does Volkswagen own, apart from Volkswagen?</label> <br/>
             <select id="question3" name="question3[]" size="two" multiple>
                 <option value="Volvo">Volvo</option>
                 <option value="Saab">Saab</option>
-                <option value="Audi">Audi</option> <!-- answer -->
-                <option value="Lamborghini">Lamborghini</option> <!-- answer -->
+                <option value="Audi">Audi</option>
+                <option value="Lamborghini">Lamborghini</option>
                 <option value="BMW">BMW</option>
             </select>
         </div>
         <div>
-            <!-- checkbox multi choice one answer -->
             <!-- this needs code to force it to only be able to use one checkbox, this will be done below -->
             <label>4. Which European capital is known as ‘The City of the Seven Hills’?</label> <br/>
             <input type="checkbox" name="question4[]" value="Berlin">Berlin <br/>
-            <input type="checkbox" name="question4[]" value="Rome">Rome <br/> <!-- answer -->
+            <input type="checkbox" name="question4[]" value="Rome">Rome <br/>
             <input type="checkbox" name="question4[]" value="London">London <br/>
             <input type="checkbox" name="question4[]" value="Paris">Paris <br/>
             <input type="checkbox" name="question4[]" value="Madrid">Madrid <br/>
         </div>
         <div>
-            <!-- checkbox multi choice multi answer -->
             <label>5. What are the places called on each pole of the Earth?</label> <br/>
-            <input type="checkbox" name="question5[]" value="Arctic">Arctic <br/> <!-- answer -->
+            <input type="checkbox" name="question5[]" value="Arctic">Arctic <br/>
             <input type="checkbox" name="question5[]" value="North America">North America <br/>
-            <input type="checkbox" name="question5[]" value="Antarctic">Antarctic <br/> <!-- answer -->
+            <input type="checkbox" name="question5[]" value="Antarctic">Antarctic <br/>
             <input type="checkbox" name="question5[]" value="South America">South America <br/>
             <input type="checkbox" name="question5[]" value="Asia">Asia <br/>
         </div>
         <div>
             <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>
-            <input type="text" id="question6" name="question6"> <br/> <!-- must contain specific string -->
+            <input type="text" id="question6" name="question6"> <br/>
         </div>
         <div>
-            <label for="question7">7. Who was the first president of the USA?</label> <br/> <!-- george washington -->
-            <input type="text" id="question7" name="question7"> <br/> <!-- must be specific string -->
+            <label for="question7">7. Who was the first president of the USA?</label> <br/>
+            <input type="text" id="question7" name="question7"> <br/>
         </div>
         <div>
             <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
-            <input type="number" step="1" id="question8" name="question8"> <br/> <!-- must be higher than 400 -->
+            <input type="number" step="1" id="question8" name="question8"> <br/>
         </div>
         <div>
-            <label for="question9">9. What is your favourite browser?</label> <br/> <!-- datalist -->
+            <label for="question9">9. What is your favourite browser?</label> <br/>
             <input list="browsers" id="question9" name="question9">
             <datalist id="browsers">
                 <option value="Internet Explorer">
@@ -101,15 +95,15 @@
         </div>
         <div>
             <label>10. What is 100 + 50?</label> <br/>
-            <input type="range" min="0" max="1000" name="question10[range]" value="50" /> +
-            <input type="number" name="question10[number]" value="10" /> =
-            <output id="result" name="result">60</output>
+            <input type="range" min="0" max="500" name="question10[range]" value="0" /> +
+            <input type="number" name="question10[number]" value="0" /> =
+            <output id="result" name="result">0</output>
         </div>
         <div>
             <label>11. What is 500 + 100?</label> <br/>
-            <input type="range" min="0" max="1000" name="question11[range]" value="100" /> +
-            <input type="number" name="question11[number]" value="500" min="0" /> =
-            <output id="resultTwo" name="resultTwo">600</output>
+            <input type="range" min="0" max="1000" name="question11[range]" value="0" /> +
+            <input type="number" name="question11[number]" value="0" min="0" /> =
+            <output id="resultTwo" name="resultTwo">0</output>
         </div>
 
         <input type="submit" value="Submit"/><br/>

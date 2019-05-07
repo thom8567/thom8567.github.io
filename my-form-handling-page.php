@@ -80,7 +80,7 @@
         function validate($answers, $key, array $ruleSet){
             try {
                 if( isset($ruleSet['required']) && $ruleSet['required'] ){
-                    assertFilledOut( $answers, $key, $ruleSet );
+                    assertFilledOut( $answers, $key );
                 }
                 if( isset($ruleSet['answerNeeded']) && $ruleSet['answerNeeded'] ){
                     assertAnswered( $answers, $key );
@@ -97,28 +97,28 @@
         }
 
         //Check if question is answered
-        function assertFilledOut( array $answers, $key, $ruleSet ){
+        function assertFilledOut( array $answers, $key){
             //Get question from answers array and return true/false depending on whether set or not
             if ( !isset($answers[$key]) ){
                 throw new \Exception('Required field has not been filled in' );
             } else {
-                if ( strpos($key, 'email') ){
-                    if ( filter_var($answers[$key], FILTER_VALIDATE_EMAIL) ){
-                        throw new \Exception( 'Email is valid' );
-                    } else {
+                if ( strpos($key, 'Address') ){
+                    if ( !filter_var($answers[$key], FILTER_VALIDATE_EMAIL) ){
                         throw new \Exception( 'Email is not valid' );
+                    } else {
+                        throw new \Exception( $answers[$key] );
                     }
                 } else if ( strpos($key, 'Name') ){
-                    if ( preg_match("/^[a-z ,.\'-]+$/i", $answers[$key]) ){
-                        throw new \Exception( 'Name is valid' );
-                    } else {
+                    if ( !preg_match("/^[a-z ,.\'-]+$/i", $answers[$key]) ){
                         throw new \Exception( 'Name is not valid' );
-                    }
-                } else if ( strpos($key, 'phone') ){
-                    if ( phoneNumberValidation($answers[$key]) ){
-                        throw new \Exception( 'Valid number' );
                     } else {
-                        throw new \Exception( 'Invalid number' );
+                        throw new \Exception( $answers[$key] );
+                    }
+                } else if ( strpos($key, 'Number') ){
+                    if ( !phoneNumberValidation($answers[$key]) ){
+                        throw new \Exception( 'Number is not valid' );
+                    } else {
+                        throw new \Exception( $answers[$key] );
                     }
                 }
             }
@@ -172,16 +172,8 @@
         }
 
         function phoneNumberValidation($phoneNumber){
-            //Ensure that the number is just a number with no extra characters
-            $justNumbers = preg_replace('/[^0-9]/', '', $phoneNumber);
-
-            //Check if it has a leading number and eliminate it
-            if ( strlen($justNumbers) == 11 ){
-                $justNumbers = preg_replace("/^1/", '',$justNumbers);
-            }
-
-            //If there are 10 digits left the most likely, it is valid
-            if ( strlen($justNumbers) == 10 ){
+            //Change for UK numbers only
+            if ( preg_match('/^0[1-9][0-9]{9}$/', $phoneNumber) ){
                 return true;
             } else {
                 return false;
@@ -198,16 +190,18 @@
             $response = $errors[$questionNumber];
             $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
             //CURRENTLY NOT VALIDATING AGAINST DOUBLE DIGITS CORRECTLY
+
             $questionNumber = preg_replace('/(?<!\ )[0-9]/', ' $0', $questionNumber);
             $questionNumber = preg_replace('/(?<!\ )[0-9][0-9]/', ' $0', $questionNumber);
+
             $questionNumber = ucwords($questionNumber);
             echo "<div> <b>$questionNumber</b> <br/> $response <hr/> </div>";
         }
 
-        echo "<pre>";
-        print_r($answers);
-        print_r($errors);
-        echo "</pre>";
+//        echo "<pre>";
+//        print_r($answers);
+//        print_r($errors);
+//        echo "</pre>";
     ?>
 
     <div>
