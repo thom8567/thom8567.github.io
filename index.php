@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,20 +12,61 @@
 
 </head>
 <body>
+
+    <?php
+
+        function formatQuestionNumbers(string $question){
+
+            $question = preg_replace('/(?<!\ )[A-Z]/', ' $0', $question);
+            $question = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $question);
+            $question = ucwords($question);
+            return $question;
+        }
+
+        function printError(string $question, $errors){
+            echo "<p><b>".formatQuestionNumbers($question)."</b> -". $errors[$question]. "</p>";
+        }
+
+        $errors = $_SESSION['errors'];
+
+        $questionKeys = array_keys($errors);
+
+        foreach ( $errors as $value ){
+            echo "<pre>";
+            print_r($value);
+            echo "</pre>";
+        }
+
+        echo "<pre>";
+        print_r($errors);
+        print_r($questionKeys);
+        echo "</pre>";
+
+    ?>
+
     <form action="/my-form-handling-page.php" method="post">
         <h1>Welcome to my Quiz!</h1>
         <h2>Please fill out your information below:</h2>
         <div>
             <label for="name">Full Name:</label> <br/>
             <input type="text" id="name" name="fullName" maxlength="40" autocomplete="name" required>
+            <?php
+                printError('fullName', $errors);
+            ?>
         </div>
         <div>
             <label for="mail">E-mail:</label> <br/>
             <input type="email" id="mail" name="emailAddress" maxlength="100" autocomplete="email" required>
+            <?php
+                printError('emailAddress', $errors);
+            ?>
         </div>
         <div>
             <label for="phoneNumber">Mobile Phone Number (UK Numbers Only - e.g. 01234567891):</label> <br/>
             <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="01234567891" required>
+            <?php
+                printError('phoneNumber', $errors);
+            ?>
         </div>
         <h2>Quiz:</h2>
         <div>
@@ -33,6 +77,9 @@
                 <option value="Aeroplane">Aeroplane</option>
                 <option value="Satellites">Satellites</option>
             </select>
+            <?php
+                printError('question1', $errors);
+            ?>
         </div>
         <div>
             <img src="assets/tiger.jpg"
@@ -42,6 +89,9 @@
             <input type="radio" name="question2" value="Tiger">Tiger <br/>
             <input type="radio" name="question2" value="Elephant">Elephant <br/>
             <input type="radio" name="question2" value="Duck">Duck <br/>
+            <?php
+                printError('question2', $errors);
+            ?>
         </div>
         <div>
             <!-- needs code to allow multiple to be selected without holding down ctrl -->
@@ -53,6 +103,9 @@
                 <option value="Lamborghini">Lamborghini</option>
                 <option value="BMW">BMW</option>
             </select>
+            <?php
+                printError('question3', $errors);
+            ?>
         </div>
         <div>
             <!-- this needs code to force it to only be able to use one checkbox, this will be done below -->
@@ -62,6 +115,9 @@
             <input type="checkbox" name="question4[]" value="London">London <br/>
             <input type="checkbox" name="question4[]" value="Paris">Paris <br/>
             <input type="checkbox" name="question4[]" value="Madrid">Madrid <br/>
+            <?php
+                printError('question4', $errors);
+            ?>
         </div>
         <div>
             <label>5. What are the places called on each pole of the Earth?</label> <br/>
@@ -70,18 +126,30 @@
             <input type="checkbox" name="question5[]" value="Antarctic">Antarctic <br/>
             <input type="checkbox" name="question5[]" value="South America">South America <br/>
             <input type="checkbox" name="question5[]" value="Asia">Asia <br/>
+            <?php
+                printError('question5', $errors);
+            ?>
         </div>
         <div>
             <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>
             <input type="text" id="question6" name="question6"> <br/>
+            <?php
+                printError('question6', $errors);
+            ?>
         </div>
         <div>
             <label for="question7">7. Who was the first president of the USA?</label> <br/>
             <input type="text" id="question7" name="question7"> <br/>
+            <?php
+                printError('question7', $errors);
+            ?>
         </div>
         <div>
             <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
             <input type="number" step="1" id="question8" name="question8"> <br/>
+            <?php
+                printError('question8', $errors);
+            ?>
         </div>
         <div>
             <label for="question9">9. What is your favourite browser?</label> <br/>
@@ -92,18 +160,27 @@
                 <option value="Google Chrome">
                 <option value="Mozilla Firefox">
             </datalist>
+            <?php
+                printError('question9', $errors);
+            ?>
         </div>
         <div>
             <label>10. What is 100 + 50?</label> <br/>
             <input type="range" min="0" max="500" name="question10[range]" value="0" /> +
             <input type="number" name="question10[number]" value="0" /> =
             <output id="result" name="result">0</output>
+            <?php
+                printError('question10', $errors);
+            ?>
         </div>
         <div>
             <label>11. What is 500 + 100?</label> <br/>
             <input type="range" min="0" max="1000" name="question11[range]" value="0" /> +
             <input type="number" name="question11[number]" value="0" min="0" /> =
             <output id="resultTwo" name="resultTwo">0</output>
+            <?php
+                printError('question11', $errors);
+            ?>
         </div>
 
         <input type="submit" value="Submit"/><br/>
@@ -117,24 +194,24 @@
           alert("THIS IS AN ALERT!");
         }
 
-        function createHandler(rangeSelector, inputSelector, outputSelector){
-          var range = document.querySelector(rangeSelector);
-          var input = document.querySelector(inputSelector);
-          var output = document.querySelector(outputSelector);
+        function createHandler( rangeSelector, inputSelector, outputSelector ){
+          var range = document.querySelector( rangeSelector );
+          var input = document.querySelector( inputSelector );
+          var output = document.querySelector( outputSelector );
 
           function handleUpdate(){
             if ( isNaN(parseInt(input.value)) ){
               input.value = 0;
             }
-            output.value = parseInt(range.value) + parseInt(input.value);
+            output.value = parseInt( range.value ) + parseInt( input.value );
           }
           range.oninput = handleUpdate;
           input.oninput = handleUpdate;
         }
 
-        document.getElementById("alertButton").addEventListener("click", showAlert);
-        createHandler('input[name="question10[range]"]', 'input[name="question10[number]"]', 'output[name="result"]');
-        createHandler('input[name="question11[range]"]', 'input[name="question11[number]"]', 'output[name="resultTwo"]');
+        document.getElementById( "alertButton" ).addEventListener( "click", showAlert );
+        createHandler( 'input[name="question10[range]"]', 'input[name="question10[number]"]', 'output[name="result"]' );
+        createHandler( 'input[name="question11[range]"]', 'input[name="question11[number]"]', 'output[name="resultTwo"]' );
 
     </script>
 
