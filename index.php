@@ -31,16 +31,16 @@
 
         $questionKeys = array_keys($errors);
 
-        foreach ( $errors as $value ){
-            echo "<pre>";
-            print_r($value);
-            echo "</pre>";
-        }
-
-        echo "<pre>";
-        print_r($errors);
-        print_r($questionKeys);
-        echo "</pre>";
+//        foreach ( $errors as $value ){
+//            echo "<pre>";
+//            print_r($value);
+//            echo "</pre>";
+//        }
+//
+//        echo "<pre>";
+//        print_r($errors);
+//        print_r($questionKeys);
+//        echo "</pre>";
 
     ?>
 
