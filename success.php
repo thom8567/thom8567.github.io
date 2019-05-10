@@ -16,19 +16,24 @@ session_start();
     <?php
 
         $errors = $_SESSION['errors'];
+        $answers = $_SESSION['answers'];
 
-        $questionKeys = array_keys($errors);
+        echo "<pre>";
+        print_r($errors);
+        print_r($answers);
+        echo "</pre>";
 
-        foreach ( $questionKeys as $questionNumber ){
-            $response = $errors[$questionNumber];
-            $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
 
-            $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
-
-            $questionNumber = ucwords($questionNumber);
-
-            echo "<div> <b>$questionNumber</b> - <br/> $response <hr/> </div>";
-        }
+//        foreach ( $questionKeys as $questionNumber ){
+//            $response = $errors[$questionNumber];
+//            $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
+//
+//            $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
+//
+//            $questionNumber = ucwords($questionNumber);
+//
+//            echo "<div> <b>$questionNumber</b> - <br/> $response <hr/> </div>";
+//        }
 
     ?>
 

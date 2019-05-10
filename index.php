@@ -24,23 +24,20 @@
         }
 
         function printError(string $question, $errors){
-            echo "<p><b>".formatQuestionNumbers($question)."</b> -". $errors[$question]. "</p>";
+            echo "<p><b>".formatQuestionNumbers($question)."</b> -".$errors[$question]."</p>";
         }
 
-        $errors = $_SESSION['errors'];
+        if ( !empty($_SESSION) ){
+            $errors = $_SESSION['errors'];
+        } else {
+            $errors = [];
+        }
 
-        $questionKeys = array_keys($errors);
 
-//        foreach ( $errors as $value ){
-//            echo "<pre>";
-//            print_r($value);
-//            echo "</pre>";
-//        }
-//
-//        echo "<pre>";
-//        print_r($errors);
-//        print_r($questionKeys);
-//        echo "</pre>";
+
+        echo "<pre>";
+        print_r($errors);
+        echo "</pre>";
 
     ?>
 
@@ -49,21 +46,21 @@
         <h2>Please fill out your information below:</h2>
         <div>
             <label for="name">Full Name:</label> <br/>
-            <input type="text" id="name" name="fullName" maxlength="40" autocomplete="name" required>
+            <input type="text" id="name" name="user[fullName]" maxlength="40" autocomplete="name" required>
             <?php
                 printError('fullName', $errors);
             ?>
         </div>
         <div>
             <label for="mail">E-mail:</label> <br/>
-            <input type="email" id="mail" name="emailAddress" maxlength="100" autocomplete="email" required>
+            <input type="email" id="mail" name="user[emailAddress]" maxlength="100" autocomplete="email" required>
             <?php
                 printError('emailAddress', $errors);
             ?>
         </div>
         <div>
             <label for="phoneNumber">Mobile Phone Number (UK Numbers Only - e.g. 01234567891):</label> <br/>
-            <input type="number" id="phoneNumber" name="phoneNumber" maxlength="11" placeholder="01234567891" required>
+            <input type="number" id="phoneNumber" name="user[phoneNumber]" maxlength="11" placeholder="01234567891" required>
             <?php
                 printError('phoneNumber', $errors);
             ?>
@@ -71,7 +68,7 @@
         <h2>Quiz:</h2>
         <div>
             <label for="question1">1. What are the bright lights that appear at night in the sky called?</label> <br/>
-            <select id="question1" name="question1">
+            <select id="question1" name="question[1]">
                 <option value="Stars">Stars</option>
                 <option value="Streetlight">Streetlights</option>
                 <option value="Aeroplane">Aeroplane</option>
@@ -85,10 +82,10 @@
             <img src="assets/tiger.jpg"
                  alt="An apex predator that lives in the Jungle. It is orange and has a stripey pattern to help it blend in."> <br/>
             <label>2. What is the name of this animal?</label> <br/>
-            <input type="radio" name="question2" value="Lion">Lion <br/>
-            <input type="radio" name="question2" value="Tiger">Tiger <br/>
-            <input type="radio" name="question2" value="Elephant">Elephant <br/>
-            <input type="radio" name="question2" value="Duck">Duck <br/>
+            <input type="radio" name="question[2]" value="Lion">Lion <br/>
+            <input type="radio" name="question[2]" value="Tiger">Tiger <br/>
+            <input type="radio" name="question[2]" value="Elephant">Elephant <br/>
+            <input type="radio" name="question[2]" value="Duck">Duck <br/>
             <?php
                 printError('question2', $errors);
             ?>
@@ -96,7 +93,7 @@
         <div>
             <!-- needs code to allow multiple to be selected without holding down ctrl -->
             <label for="question3">3. Which car brands does Volkswagen own, apart from Volkswagen?</label> <br/>
-            <select id="question3" name="question3[]" size="two" multiple>
+            <select id="question3" name="question[3][]" size="two" multiple>
                 <option value="Volvo">Volvo</option>
                 <option value="Saab">Saab</option>
                 <option value="Audi">Audi</option>
@@ -110,50 +107,50 @@
         <div>
             <!-- this needs code to force it to only be able to use one checkbox, this will be done below -->
             <label>4. Which European capital is known as ‘The City of the Seven Hills’?</label> <br/>
-            <input type="checkbox" name="question4[]" value="Berlin">Berlin <br/>
-            <input type="checkbox" name="question4[]" value="Rome">Rome <br/>
-            <input type="checkbox" name="question4[]" value="London">London <br/>
-            <input type="checkbox" name="question4[]" value="Paris">Paris <br/>
-            <input type="checkbox" name="question4[]" value="Madrid">Madrid <br/>
+            <input type="checkbox" name="question[4][]" value="Berlin">Berlin <br/>
+            <input type="checkbox" name="question[4][]" value="Rome">Rome <br/>
+            <input type="checkbox" name="question[4][]" value="London">London <br/>
+            <input type="checkbox" name="question[4][]" value="Paris">Paris <br/>
+            <input type="checkbox" name="question[4][]" value="Madrid">Madrid <br/>
             <?php
                 printError('question4', $errors);
             ?>
         </div>
         <div>
             <label>5. What are the places called on each pole of the Earth?</label> <br/>
-            <input type="checkbox" name="question5[]" value="Arctic">Arctic <br/>
-            <input type="checkbox" name="question5[]" value="North America">North America <br/>
-            <input type="checkbox" name="question5[]" value="Antarctic">Antarctic <br/>
-            <input type="checkbox" name="question5[]" value="South America">South America <br/>
-            <input type="checkbox" name="question5[]" value="Asia">Asia <br/>
+            <input type="checkbox" name="question[5][]" value="Arctic">Arctic <br/>
+            <input type="checkbox" name="question[5][]" value="North America">North America <br/>
+            <input type="checkbox" name="question[5][]" value="Antarctic">Antarctic <br/>
+            <input type="checkbox" name="question[5][]" value="South America">South America <br/>
+            <input type="checkbox" name="question[5][]" value="Asia">Asia <br/>
             <?php
                 printError('question5', $errors);
             ?>
         </div>
         <div>
             <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>
-            <input type="text" id="question6" name="question6"> <br/>
+            <input type="text" id="question6" name="question[6]"> <br/>
             <?php
                 printError('question6', $errors);
             ?>
         </div>
         <div>
             <label for="question7">7. Who was the first president of the USA?</label> <br/>
-            <input type="text" id="question7" name="question7"> <br/>
+            <input type="text" id="question7" name="question[7]"> <br/>
             <?php
                 printError('question7', $errors);
             ?>
         </div>
         <div>
             <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
-            <input type="number" step="1" id="question8" name="question8"> <br/>
+            <input type="number" step="1" id="question8" name="question[8]"> <br/>
             <?php
                 printError('question8', $errors);
             ?>
         </div>
         <div>
             <label for="question9">9. What is your favourite browser?</label> <br/>
-            <input list="browsers" id="question9" name="question9">
+            <input list="browsers" id="question9" name="question[9]">
             <datalist id="browsers">
                 <option value="Internet Explorer">
                 <option value="Microsoft Edge">
@@ -166,8 +163,8 @@
         </div>
         <div>
             <label>10. What is 100 + 50?</label> <br/>
-            <input type="range" min="0" max="500" name="question10[range]" value="0" /> +
-            <input type="number" name="question10[number]" value="0" /> =
+            <input type="range" min="0" max="500" name="question[10][range]" value="0" /> +
+            <input type="number" name="question[10][number]" value="0" /> =
             <output id="result" name="result">0</output>
             <?php
                 printError('question10', $errors);
@@ -175,8 +172,8 @@
         </div>
         <div>
             <label>11. What is 500 + 100?</label> <br/>
-            <input type="range" min="0" max="1000" name="question11[range]" value="0" /> +
-            <input type="number" name="question11[number]" value="0" min="0" /> =
+            <input type="range" min="0" max="1000" name="question[11][range]" value="0" /> +
+            <input type="number" name="question[11][number]" value="0" min="0" /> =
             <output id="resultTwo" name="resultTwo">0</output>
             <?php
                 printError('question11', $errors);
@@ -210,8 +207,8 @@
         }
 
         document.getElementById( "alertButton" ).addEventListener( "click", showAlert );
-        createHandler( 'input[name="question10[range]"]', 'input[name="question10[number]"]', 'output[name="result"]' );
-        createHandler( 'input[name="question11[range]"]', 'input[name="question11[number]"]', 'output[name="resultTwo"]' );
+        createHandler( 'input[name="question[10][range]"]', 'input[name="question[10][number]"]', 'output[name="result"]' );
+        createHandler( 'input[name="question[11][range]"]', 'input[name="question[11][number]"]', 'output[name="resultTwo"]' );
 
     </script>
 
