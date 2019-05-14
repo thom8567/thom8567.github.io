@@ -15,25 +15,24 @@ session_start();
 
     <?php
 
-        $errors = $_SESSION['errors'];
+        function formatQuestionNumbers(string $question){
+
+            $question = preg_replace('/(?<!\ )[A-Z]/', ' $0', $question);
+            $question = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $question);
+            $question = ucwords($question);
+            return $question;
+        }
+
+        function printError(string $question, string $section, $errors){
+            if ( !empty($errors[$section][$question]) ){
+                echo "<p><b>".formatQuestionNumbers($question)."</b> - ".$errors[$section][$question]."</p>";
+            }
+        }
+
+
         $answers = $_SESSION['answers'];
 
-        echo "<pre>";
-        print_r($errors);
-        print_r($answers);
-        echo "</pre>";
 
-
-//        foreach ( $questionKeys as $questionNumber ){
-//            $response = $errors[$questionNumber];
-//            $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
-//
-//            $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
-//
-//            $questionNumber = ucwords($questionNumber);
-//
-//            echo "<div> <b>$questionNumber</b> - <br/> $response <hr/> </div>";
-//        }
 
     ?>
 

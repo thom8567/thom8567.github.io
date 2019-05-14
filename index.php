@@ -23,8 +23,16 @@
             return $question;
         }
 
-        function printError(string $question, $errors){
-            echo "<p><b>".formatQuestionNumbers($question)."</b> -".$errors[$question]."</p>";
+        function errorAlert($errors){
+            if ( !empty($errors) ){
+                echo "<p><b>Questions have errors</b></p>";
+            }
+        }
+
+        function printError(string $question, string $section, $errors){
+            if ( !empty($errors[$section][$question]) ){
+                echo "<p><b>".formatQuestionNumbers($question)."</b> - ".$errors[$section][$question]."</p>";
+            }
         }
 
         if ( !empty($_SESSION) ){
@@ -33,13 +41,17 @@
             $errors = [];
         }
 
-
-
         echo "<pre>";
         print_r($errors);
         echo "</pre>";
 
     ?>
+
+    <header>
+        <?php
+            errorAlert($errors);
+        ?>
+    </header>
 
     <form action="/my-form-handling-page.php" method="post">
         <h1>Welcome to my Quiz!</h1>
@@ -48,21 +60,21 @@
             <label for="name">Full Name:</label> <br/>
             <input type="text" id="name" name="user[fullName]" maxlength="40" autocomplete="name" required>
             <?php
-                printError('fullName', $errors);
+                printError( 'fullName', 'user', $errors );
             ?>
         </div>
         <div>
             <label for="mail">E-mail:</label> <br/>
             <input type="email" id="mail" name="user[emailAddress]" maxlength="100" autocomplete="email" required>
             <?php
-                printError('emailAddress', $errors);
+                printError( 'emailAddress', 'user', $errors );
             ?>
         </div>
         <div>
             <label for="phoneNumber">Mobile Phone Number (UK Numbers Only - e.g. 01234567891):</label> <br/>
             <input type="number" id="phoneNumber" name="user[phoneNumber]" maxlength="11" placeholder="01234567891" required>
             <?php
-                printError('phoneNumber', $errors);
+                printError( 'phoneNumber', 'user', $errors );
             ?>
         </div>
         <h2>Quiz:</h2>
@@ -75,7 +87,7 @@
                 <option value="Satellites">Satellites</option>
             </select>
             <?php
-                printError('question1', $errors);
+                printError( '1', 'question', $errors );
             ?>
         </div>
         <div>
@@ -87,7 +99,7 @@
             <input type="radio" name="question[2]" value="Elephant">Elephant <br/>
             <input type="radio" name="question[2]" value="Duck">Duck <br/>
             <?php
-                printError('question2', $errors);
+                printError( '2', 'question', $errors );
             ?>
         </div>
         <div>
@@ -101,7 +113,7 @@
                 <option value="BMW">BMW</option>
             </select>
             <?php
-                printError('question3', $errors);
+                printError( '3', 'question', $errors );
             ?>
         </div>
         <div>
@@ -113,7 +125,7 @@
             <input type="checkbox" name="question[4][]" value="Paris">Paris <br/>
             <input type="checkbox" name="question[4][]" value="Madrid">Madrid <br/>
             <?php
-                printError('question4', $errors);
+                printError( '4', 'question', $errors );
             ?>
         </div>
         <div>
@@ -124,28 +136,28 @@
             <input type="checkbox" name="question[5][]" value="South America">South America <br/>
             <input type="checkbox" name="question[5][]" value="Asia">Asia <br/>
             <?php
-                printError('question5', $errors);
+                printError( '5', 'question', $errors );
             ?>
         </div>
         <div>
             <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>
             <input type="text" id="question6" name="question[6]"> <br/>
             <?php
-                printError('question6', $errors);
+                printError( '6', 'question', $errors );
             ?>
         </div>
         <div>
             <label for="question7">7. Who was the first president of the USA?</label> <br/>
             <input type="text" id="question7" name="question[7]"> <br/>
             <?php
-                printError('question7', $errors);
+                printError( '7', 'question', $errors );
             ?>
         </div>
         <div>
             <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
             <input type="number" step="1" id="question8" name="question[8]"> <br/>
             <?php
-                printError('question8', $errors);
+                printError( '8', 'question', $errors );
             ?>
         </div>
         <div>
@@ -158,7 +170,7 @@
                 <option value="Mozilla Firefox">
             </datalist>
             <?php
-                printError('question9', $errors);
+                printError( '9', 'question', $errors );
             ?>
         </div>
         <div>
@@ -167,7 +179,7 @@
             <input type="number" name="question[10][number]" value="0" /> =
             <output id="result" name="result">0</output>
             <?php
-                printError('question10', $errors);
+                printError( '10', 'question', $errors );
             ?>
         </div>
         <div>
@@ -176,7 +188,7 @@
             <input type="number" name="question[11][number]" value="0" min="0" /> =
             <output id="resultTwo" name="resultTwo">0</output>
             <?php
-                printError('question11', $errors);
+                printError( '11', 'question', $errors );
             ?>
         </div>
 

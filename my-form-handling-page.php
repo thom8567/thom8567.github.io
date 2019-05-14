@@ -2,76 +2,57 @@
 
     session_start();
 
-    function assertRequired( array $answers, $key ){
-        if ( empty($answers['user'][$key]) ){
+    function assert_required( array $answers, $key ){
+        if ( empty($answers[$key]) ){
             throw new \Exception( 'Required field has not been filled in' );
         }
     }
 
-    function assertType( array $answers, $key, $type){
-        if ( $type === 'string' ){
-            assertValidName( $answers['user'][$key] );
-        }
-        if ( $type === 'email' ){
-            assertValidEmail( $answers['user'][$key] );
-        }
-        if ( $type === 'phoneNumber' ){
-            assertValidNumber( $answers['user'][$key] );
-        }
-    }
-
-    function assertAnswered ( array $answers, $key ){
-        if ( empty($answers['question'][$key]) ){
-            throw new \Exception('Question has not been answered' );
-        }
-    }
-
-    function assertValidNumber( string $phoneNumber ){
+    function assert_phoneNumber( $answers, $key ){
         //Change for UK numbers only
-        if ( !preg_match('/^0[1-9][0-9]{9}$/', $phoneNumber) ){
+        if ( !preg_match('/^0[1-9][0-9]{9}$/', $answers[$key]) ){
             throw new \Exception( 'Invalid' );
         }
     }
 
-    function assertValidEmail( string $emailAddress ){
-        if ( !filter_var($emailAddress, FILTER_VALIDATE_EMAIL) ){
+    function assert_emailAddress( $answers, $key ){
+        if ( !filter_var($answers[$key], FILTER_VALIDATE_EMAIL) ){
             throw new \Exception( 'Not valid' );
         }
     }
 
-    function assertValidName( string $name ){
-        if ( !preg_match("/^[a-z ,.\'-]+$/i", $name) ){
+    function assert_pattern( $answers, $key ){
+        if ( !preg_match("/^[a-z ,.\'-]+$/i", $answers[$key]) ){
             throw new \Exception( 'Not valid' );
         }
     }
 
-    function assertCheckAnswer ( array $answers, $key, array $choices ){
-        //Check answer and perform different validation based on type
-        if ( is_numeric($answers['question'][$key]) ){
+    function assert_correctChoices ( $answers, $key, $rule ){
+        if ( is_numeric($answers[$key]) ){
             $answer = (int)($answers[$key]);
-            if ( $answer !== $choices[0] ){
+            if ( $answer !== $rule[0] ){
                 throw new \Exception( 'Incorrect!' );
             }
-        } else if ( is_array($answers['question'][$key]) ){
-            if ( $answers[$key] !== $choices ){
+        } else if ( is_array($answers[$key]) ){
+            if ( $answers[$key] !== $rule ){
                 throw new \Exception( 'Incorrect!' );
             }
-        } else if ( is_string($answers['question'][$key]) ) {
-            if (strpos($answers[$key], $choices[0]) == false) {
+        } else if ( is_string($answers[$key]) ) {
+            if ( strpos($answers[$key], $rule[0] ) == false && $answers[$key] !== $rule[0] ) {
                 throw new \Exception('Incorrect!');
             }
-        } else if ( $answers['question'][$key] === '' ){
+        } else if ( $answers[$key] === '' ){
             throw new \Exception( 'Good choice!' );
         } else {
             throw new \Exception( 'Unknown type' );
         }
     }
 
-    function assertCheckCalculation ( array $answers, $key, $choices ){
-        $range = (int)($answers['question'][$key]['range'] ?? 0);
-        $number = (int)($answers['question'][$key]['number'] ?? 0);
+    function assert_CheckCalculation ( array $answers, $key, $rule ){
+        $range = (int)($answers[$key]['range'] ?? 0);
+        $number = (int)($answers[$key]['number'] ?? 0);
         $result = $range + $number;
-        if ( $result !== $choices[0] ){
+        if ( $result !== $rule[0] ){
             throw new \Exception( 'Incorrect!' );
         }
     }
@@ -85,7 +66,6 @@
         exit();
     }
 
-
     //Making sure that POST is correct and is an array
     $answers = ( array ) ( $_POST ?? [] );
 
@@ -96,62 +76,59 @@
         'user' => [
             'fullName' => [
                 'required' => true,
-                'type' => 'string',
                 'pattern' => "/^[a-z ,.\'-]+$/i",
             ],
             'emailAddress' => [
                 'required' => true,
-                'type' => 'email',
             ],
             'phoneNumber'  => [
                 'required'    => true,
-                'type' => 'phoneNumber',
                 'phoneNumber' => 'uk',
             ],
         ],
         'question' => [
             '1' => [
+                'required' => true,
                 'correctChoices' => ['Stars'],
-                'answerNeeded'  => false,
             ],
             '2' => [
+                'required' => true,
                 'correctChoices' => ['Tiger'],
-                'answerNeeded'  => true,
             ],
             '3' => [
+                'required' => true,
                 'correctChoices' => ['Audi', 'Lamborghini'],
-                'answerNeeded'   => true,
             ],
             '4' => [
+                'required' => true,
                 'correctChoices' => ['Rome'],
-                'answerNeeded'   => true,
             ],
             '5' => [
+                'required' => true,
                 'correctChoices' => ['Arctic', 'Antarctic'],
-                'answerNeeded'   => true,
             ],
             '6' => [
+                'required' => true,
                 'correctChoices' => ['Whitehouse'],
-                'answerNeeded'   => true,
             ],
             '7' => [
+                'required' => true,
                 'correctChoices' => ['George Washington'],
-                'answerNeeded'   => true,
             ],
             '8' => [
+                'required' => true,
                 'correctChoices' => [400],
-                'answerNeeded'   => true,
             ],
             '9' => [
-                'answerNeeded' => true
+                'required' => true,
             ],
             '10' => [
-                'correctChoices' => [150],
-                'sliderInput'   => true,
+                'required' => true,
+                'checkCalculation' => [150],
             ],
             '11' => [
-                'correctChoices' => [600],
-                'sliderInput'   => true,
+                'required' => true,
+                'checkCalculation' => [600],
             ]
         ],
     ];
@@ -161,36 +138,30 @@
         'question' => [],
     ];
 
-    echo '<pre>';
-    print_r($answers);
-    echo '</pre>';
+    foreach ( $rules as $groupName => $groupRules ){
+        // loop through all "groups" properties/rule sets
+        foreach ( $groupRules as $property => $ruleSet ){
+            try {
+                foreach ( $ruleSet as $ruleName => $rule ){
+                    $functionName = 'assert_' . $ruleName;
 
-    foreach ( $rules['user'] as $key => $ruleSet ){
-        $errors['user'][$key] = assertRequired($answers, $key);
-        $errors['user'][$key] = assertType($answers, $key, $ruleSet['type']);
+                    if ( !function_exists($functionName) ){
+                       throw new \Exception ( 'Function ' . $functionName . ' does not exist' );
+                    }
+
+                    $functionName ( $answers[$groupName] ?? [], $property, $rule );
+                }
+            } catch ( \Exception $exception ){
+                $errors[$groupName] = $errors[$groupName] ?? [];
+                $errors[$groupName][$property] = $exception -> getMessage();
+            }
+        }
     }
-    //Need to do foreach for question
-
-
-    echo '<pre>';
-    print_r($errors);
-    echo '</pre>';
-
-//    foreach ($rules as $rule => $ruleSet){
-//        echo '<pre>';
-//        print_r($rule);
-//        echo '</pre>';
-//        foreach ( $answers[$rule] as $value ){
-//            echo '<pre>';
-//            print_r($value);
-//            echo '</pre>';
-//        }
-//    }
 
     $_SESSION['errors'] = $errors;
     $_SESSION['answers'] = $answers;
 
-    redirect( empty(array_filter($errors['question'])) || empty(array_filter($errors['user'])) );
+    redirect( empty(array_filter($errors['question'])) && empty(array_filter($errors['user'])) );
 
 //    foreach ( $rules['user'] as $key => $ruleSet ){
 //        $errors['user'][$key] = validate($answers['user'] ?? [], $key, $ruleSet);
