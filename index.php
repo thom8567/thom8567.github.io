@@ -100,28 +100,34 @@
                 ?>
             </div>
             <div class="form-group">
-                <img src="assets/tiger.jpg"
-                     alt="An apex predator that lives in the Jungle. It is orange and has a stripey pattern to help it blend in."> <br/>
                 <label>2. What is the name of this animal?</label> <br/>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="question[2]" value="Lion" id="animal1">
-                    <label class="form-check-label" for="animal1">Lion</label><br/>
+                <div class="text-center">
+                    <img src="assets/tiger.jpg"
+                         alt="An apex predator that lives in the Jungle. It is orange and has a stripey pattern to help it blend in."
+                         class="rounded">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="question[2]" value="Tiger" id="animal2">
-                    <label class="form-check-label" for="animal2">Tiger</label><br/>
+                <br/>
+                <div class="row align-items-center">
+                    <div class="form-check form-check-inline col-md">
+                        <input class="form-check-input" type="radio" name="question[2]" value="Lion" id="animal1">
+                        <label class="form-check-label" for="animal1">Lion</label><br/>
+                    </div>
+                    <div class="form-check form-check-inline col-md">
+                        <input class="form-check-input" type="radio" name="question[2]" value="Tiger" id="animal2">
+                        <label class="form-check-label" for="animal2">Tiger</label><br/>
+                    </div>
+                    <div class="form-check form-check-inline col-md">
+                        <input class="form-check-input" type="radio" name="question[2]" value="Elephant" id="animal3">
+                        <label class="form-check-label" for="animal3">Elephant</label><br/>
+                    </div>
+                    <div class="form-check form-check-inline col-md">
+                        <input class="form-check-input" type="radio" name="question[2]" value="Duck" id="animal4">
+                        <label class="form-check-label" for="animal4">Duck</label><br/>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="question[2]" value="Elephant" id="animal3">
-                    <label class="form-check-label" for="animal3">Elephant</label><br/>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="question[2]" value="Duck" id="animal4">
-                    <label class="form-check-label" for="animal4">Duck</label><br/>
-                    <?php
-                        printError( '2', 'question', $errors );
-                    ?>
-                </div>
+                <?php
+                    printError( '2', 'question', $errors );
+                ?>
             </div>
             <div class="form-group">
                 <label for="question3">3. Which car brands does Volkswagen own, apart from Volkswagen?</label> <br/>
