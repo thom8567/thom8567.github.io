@@ -57,6 +57,14 @@
         }
     }
 
+    function assert_MultipleAnswers ( $answer, $key, $rule ){
+        if ( !$rule ){
+            if ( count( $answer[$key] ) > 1 ){
+                throw new \Exception( 'Too many answers' );
+            }
+        }
+    }
+
     function redirect(bool $isSuccess){
         $url = 'index.php';
         if ( $isSuccess ){
@@ -101,10 +109,12 @@
             ],
             '4' => [
                 'required' => true,
+                'multipleAnswers' => false,
                 'correctChoices' => ['Rome'],
             ],
             '5' => [
                 'required' => true,
+                'multipleAnswers' => true,
                 'correctChoices' => ['Arctic', 'Antarctic'],
             ],
             '6' => [
