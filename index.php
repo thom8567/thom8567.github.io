@@ -190,21 +190,24 @@
             </div>
             <div class="form-group">
                 <label for="question6">6. What is the name of the presidential house in the USA?</label> <br/>
-                <input type="text" class="form-control" id="question6" name="question[6]" value="<?=$answers['question']['6'] ?? ''; ?>"> <br/>
+                <input type="text" class="form-control" id="question6" name="question[6]"
+                       value="<?=$answers['question']['6'] ?? ''; ?>" autocomplete="off"> <br/>
                 <?php
                     printError( '6', 'question', $errors );
                 ?>
             </div>
             <div class="form-group">
                 <label for="question7">7. Who was the first president of the USA?</label> <br/>
-                <input type="text" class="form-control" id="question7" name="question[7]" value="<?=$answers['question']['7'] ?? ''; ?>"> <br/>
+                <input type="text" class="form-control" id="question7" name="question[7]"
+                       value="<?=$answers['question']['7'] ?? ''; ?>" autocomplete="off"> <br/>
                 <?php
                     printError( '7', 'question', $errors );
                 ?>
             </div>
             <div class="form-group">
                 <label for="question8">8. What is (10 + 10) ^ 2 ?</label> <br/>
-                <input type="number" class="form-control" step="1" id="question8" name="question[8]" value="<?=$answers['question']['8'] ?? ''; ?>"> <br/>
+                <input type="number" class="form-control" step="1" id="question8" name="question[8]"
+                       value="<?=$answers['question']['8'] ?? ''; ?>" autocomplete="off"> <br/>
                 <?php
                     printError( '8', 'question', $errors );
                 ?>
