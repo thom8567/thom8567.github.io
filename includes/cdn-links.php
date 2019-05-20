@@ -1,6 +1,3 @@
-<!-- My style sheet -->
-<link rel="stylesheet" type="text/css" href="../styles/styles.css">
-
 <!-- Jquery CDN -->
 <script
         src="https://code.jquery.com/jquery-3.4.1.js"
@@ -19,3 +16,13 @@
 </script>
 <!-- Bootstrap CDN -->
 
+<!-- Handlebars CDN -->
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.js"
+        integrity="sha256-/wU5o1HRMBu91AoM5TxLLP4aspWB+FH8dtrkJZGCPFg="
+        crossorigin="anonymous">
+</script>
+<!-- Handlebars CDN -->
+
+<!-- My style sheet -->
+<link rel="stylesheet" type="text/css" href="../styles/styles.css">

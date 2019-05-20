@@ -1,3 +1,21 @@
 .form-colour{
     background-color: gainsboro;
 }
+.form-control.is-invalid ~ .errors-wrapper .invalid-feedback,
+.form-group.is-invalid .errors-wrapper .invalid-feedback,
+.is-valid ~ .success-wrapper .valid-feedback
+{
+    display: block;
+}
+
+.success-wrapper{
+    display: block;
+}
+
+.banner-hide{
+    display: none;
+}
+
+label{
+    display: block;
+}

@@ -1,6 +1,6 @@
 <?php
 
-    session_start();
+    header("Content-type:application/json");
 
     function assert_required( array $answers, $key ){
         if ( empty($answers[$key]) ){
@@ -168,77 +168,11 @@
         }
     }
 
-    $_SESSION['errors'] = $errors;
-    $_SESSION['answers'] = $answers;
+    $response = [
+        'success'  => empty( array_filter($errors['question']) ) && empty( array_filter($errors['user']) ),
+        'errors'   => $errors,
+    ];
 
-    redirect( empty(array_filter($errors['question'])) && empty(array_filter($errors['user'])) );
-
-//    foreach ( $rules['user'] as $key => $ruleSet ){
-//        $errors['user'][$key] = validate($answers['user'] ?? [], $key, $ruleSet);
-//    }
-//    foreach ( $rules['question'] as $key => $ruleSet ){
-//        $errors['question'][$key] = validate( $answers['question'] ?? [], $key, $ruleSet );
-//    }
-//    function validate($answers, $key, array $ruleSet){
-//        try {
-//              if (  ){
-//
-//              }
-//
-//            if ( isset($ruleSet['required']) && $ruleSet['required'] ){
-//                assertFilledOut( $answers, $key );
-//            }
-//            if ( isset($ruleSet['answerNeeded']) && $ruleSet['answerNeeded'] ){
-//                assertAnswered( $answers, $key );
-//            }
-//            if ( isset($ruleSet['sliderInput']) && $ruleSet['sliderInput'] ){
-//                assertCheckCalculation( $answers, $key, $ruleSet['correctChoices'] );
-//            }
-//            if ( isset($ruleSet['correctChoices']) && is_array($ruleSet['correctChoices']) ){
-//                assertCheckAnswer($answers, $key, $ruleSet['correctChoices'] );
-//            }
-//        } catch ( \Exception $exception ) {
-//            return $exception -> getMessage();
-//        }
-//    }
-//Check if question is answered
-//    function assertFilledOut( array $answers, $key){
-//        //Get question from answers array and return true/false depending on whether set or not
-//        if ( !isset($answers[$key]) ){
-//            throw new \Exception('Required field has not been filled in' );
-//        } else {
-//            if ( strpos($key, 'Address') ){
-//                if ( !filter_var($answers[$key], FILTER_VALIDATE_EMAIL) ){
-//                    throw new \Exception( 'Not valid' );
-//                }
-//            } else if ( strpos($key, 'Name') ){
-//                if ( !preg_match("/^[a-z ,.\'-]+$/i", $answers[$key]) ){
-//                    throw new \Exception( 'Not valid' );
-//                }
-//            } else if ( strpos($key, 'Number') ){
-//                if ( !phoneNumberValidation($answers[$key]) ){
-//                    throw new \Exception( 'Not valid' );
-//                }
-//            }
-//        }
-//    }
-//    foreach ( $rules as $key => $rule ) {
-//        $errors[$key] = validate($answers, $key, $rule);
-//        echo "<pre>";
-//        print_r($key);
-//        echo "</pre>";
-//    }
-//    Pretty sure these are now redundant
-//
-//    $questionKeys = array_keys($errors);
-//
-//    foreach ( $questionKeys as $questionNumber ){
-//        $response = $errors[$questionNumber];
-//        $questionNumber = preg_replace('/(?<!\ )[A-Z]/', ' $0', $questionNumber);
-//
-//        $questionNumber = preg_replace('/(?<!\ )\d{1,2}/', ' $0', $questionNumber);
-//
-//        $questionNumber = ucwords($questionNumber);
-//    }
+    echo json_encode($response);
 
 ?>
