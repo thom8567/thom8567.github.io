@@ -3,7 +3,7 @@
 }
 .form-control.is-invalid ~ .errors-wrapper .invalid-feedback,
 .form-group.is-invalid .errors-wrapper .invalid-feedback,
-.is-valid ~ .success-wrapper .valid-feedback
+.is-valid .success-wrapper .valid-feedback
 {
     display: block;
 }

@@ -243,6 +243,7 @@
             //Remove all errors and class
             $('.can-valid').removeClass( 'is-invalid is-valid' );
             $('.errors-wrapper, .success-wrapper').html('');
+            $( '#error-alert' ).html( '' );
             let error = '';
 
             $.post( '/my-form-handling-page.php', data, function ( returnedData ){
@@ -276,11 +277,12 @@
                     });
                   });
                   $( '#error-alert' ).html( bannerTemplate() );
+                } else {
+                  window.location.href = "http://localhost:8000/success.php";
                 }
                 $( '.can-valid:not(.is-invalid)' ).addClass( 'is-valid' );
-                $( '.form-group .can-valid.is-valid .success-wrapper' ).html( successTemplate() );
-                $( '#error-alert' ).addClass('.banner-hide');
-            })
+                $( '.form-group.can-valid.is-valid .success-wrapper' ).html( successTemplate() );
+            });
           })
         });
 
