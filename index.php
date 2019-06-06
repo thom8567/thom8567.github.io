@@ -203,7 +203,7 @@
                 </div>
 
                 <div class="col-sm text-right">
-                    <button class="btn btn-danger btn-outline-dark" type="reset">Reset</button>
+                    <button class="btn btn-danger btn-outline-dark" type="reset" id="reset">Reset</button>
                 </div>
             </div>
         </form>
@@ -324,6 +324,11 @@
           e.preventDefault();
           $(this).prop( 'selected', !$(this).prop('selected') );
           return false;
+        });
+
+        //Upon reset refresh page
+        $('#reset').click(function(){
+          document.location.reload(true);
         });
 
     </script>
