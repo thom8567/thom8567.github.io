@@ -15,6 +15,7 @@
 <body>
 
     <div class="text-center" id="error-alert"></div>
+    <div class="text-center" id="success-alert"></div>
 
     <div class="container form-colour">
         <h1 class="text-center">Welcome to my Quiz!</h1>
@@ -226,6 +227,13 @@
         </div>
     </script>
 
+    <script id="success-banner" type="text/x-handlebars-template">
+        <div class="alert alert-success" role="alert">
+            <h2>Everything has been answered correctly!</h2>
+            <p>Click the reset button to go again!</p>
+        </div>
+    </script>
+
     <script>
 
         const errorSource = document.getElementById( 'error-template' ).innerHTML;
@@ -234,6 +242,8 @@
         var successTemplate = Handlebars.compile(successSource);
         const bannerSource = document.getElementById( 'banner-template' ).innerHTML;
         var bannerTemplate = Handlebars.compile(bannerSource);
+        const successBannerSource = document.getElementById( 'success-banner' ).innerHTML;
+        var successBannerTemplate = Handlebars.compile(successBannerSource);
 
         $( function(){
           $( '#quiz-form' ).on( 'submit', function( e ){
@@ -278,7 +288,7 @@
                   });
                   $( '#error-alert' ).html( bannerTemplate() );
                 } else {
-                  window.location.href = "http://localhost:8000/success.php";
+                  $( '#success-alert' ).html( successBannerTemplate() );
                 }
                 $( '.can-valid:not(.is-invalid)' ).addClass( 'is-valid' );
                 $( '.form-group.can-valid.is-valid .success-wrapper' ).html( successTemplate() );
