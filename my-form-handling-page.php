@@ -1,5 +1,10 @@
 <?php
 
+    require __DIR__ . '/includes/mysqli_connect.php';
+
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
     header("Content-type:application/json");
 
     function assert_required( array $answers, $key ){
@@ -168,10 +173,48 @@
         }
     }
 
+    $arrayed_answers = [];
+
+    foreach($answers as $section){
+        foreach($section as $answer){
+            array_push($arrayed_answers, $answer);
+        }
+    }
+
+    $full_name = $arrayed_answers[0];
+    $email_address = $arrayed_answers[1];
+    $phone_number = $arrayed_answers[2];
+    $question1 = $arrayed_answers[3];
+    $question2 = $arrayed_answers[4];
+    $question3 = json_encode($arrayed_answers[5]);
+    $question4 = json_encode($arrayed_answers[6]);
+    $question5 = json_encode($arrayed_answers[7]);
+    $question6 = $arrayed_answers[8];
+    $question7 = $arrayed_answers[9];
+    $question8 = $arrayed_answers[10];
+    $question9 = $arrayed_answers[11];
+    $question10 = json_encode($arrayed_answers[12]);
+    $question11 = json_encode($arrayed_answers[13]);
+
     $response = [
         'success'  => empty( array_filter($errors['question']) ) && empty( array_filter($errors['user']) ),
         'errors'   => $errors,
     ];
+
+    //Must check if successful or not in preparation for MYSQL Stuff
+    if ( $response['success'] ){
+        $stmt = $mysqli -> prepare( "INSERT INTO quiz_data(full_name, email_address, phone_number, question1, 
+                                                                  question2, question3, question4, question5, question6, 
+                                                                  question7, question8, question9, question10, question11)
+                                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        $stmt -> bind_param('ssssssssssssss', $full_name, $email_address, $phone_number, $question1, $question2, $question3,
+                                              $question4, $question5, $question6, $question7, $question8, $question9,
+                                              $question10, $question11);
+
+        $stmt -> execute();
+        $stmt -> close();
+    }
 
     echo json_encode($response);
 
