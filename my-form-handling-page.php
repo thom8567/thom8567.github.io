@@ -1,5 +1,4 @@
 <?php
-
     require __DIR__ . '/includes/mysqli_connect.php';
 
     ini_set('display_errors', 1);
@@ -203,17 +202,57 @@
 
     //Must check if successful or not in preparation for MYSQL Stuff
     if ( $response['success'] ){
-        $stmt = $mysqli -> prepare( "INSERT INTO quiz_data(full_name, email_address, phone_number, question1, 
-                                                                  question2, question3, question4, question5, question6, 
-                                                                  question7, question8, question9, question10, question11)
-                                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $query = <<<SQL
+            INSERT INTO quiz_data(
+                full_name, 
+                email_address, 
+                phone_number, 
+                question1, 
+                question2, 
+                question3, 
+                question4, 
+                question5, 
+                question6, 
+                question7, 
+                question8, 
+                question9, 
+                question10, 
+                question11
+            ) VALUES (
+                :full_name,
+                :email_address, 
+                :phone_number, 
+                :question1, 
+                :question2, 
+                :question3, 
+                :question4, 
+                :question5, 
+                :question6, 
+                :question7, 
+                :question8, 
+                :question9, 
+                :question10, 
+                :question11
+            )
+SQL;
+        $stmt = $pdo -> prepare($query);
 
-        $stmt -> bind_param('ssssssssssssss', $full_name, $email_address, $phone_number, $question1, $question2, $question3,
-                                              $question4, $question5, $question6, $question7, $question8, $question9,
-                                              $question10, $question11);
-
-        $stmt -> execute();
-        $stmt -> close();
+        $stmt -> execute([
+            ':full_name'        => $full_name,
+            ':email_address'    => $email_address,
+            ':phone_number'     => $phone_number,
+            ':question1'        => $question1,
+            ':question2'        => $question2,
+            ':question3'        => $question3,
+            ':question4'        => $question4,
+            ':question5'        => $question5,
+            ':question6'        => $question6,
+            ':question7'        => $question7,
+            ':question8'        => $question8,
+            ':question9'        => $question9,
+            ':question10'       => $question10,
+            ':question11'       => $question11,
+        ]);
     }
 
     echo json_encode($response);

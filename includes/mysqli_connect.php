@@ -1,8 +1,10 @@
 <?php
 
-$mysqli = new mysqli('127.0.0.1', 'homestead', 'secret', 'wattbike', '3306');
-if ( $mysqli -> connect_error ){
-    exit ( 'Error connecting to Database' );
+try{
+    $pdo = new PDO('mysql:host=127.0.0.1;dbname=learningrepo;', 'homestead', 'secret');
+    $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e){
+    echo "Error:  " . $e -> getMessage() . "<br/>";
+    die();
 }
-mysqli_report( MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT );
-$mysqli -> set_charset('utf8mb4');
+
