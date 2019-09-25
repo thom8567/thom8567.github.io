@@ -1,5 +1,5 @@
-# thom8567.github.io
-My website which will be used to test things out and display information about me.
+# Form Quiz
+My quiz which will be used to practice skills and learn new things.
 
-It will mostly be used to learn things and am currently using the following to go through and provide steps:
+For now I have gone through the following steps to get the code to this point
 https://docs.google.com/document/d/1lJQgTPJXTsWTnn428P7w6mKqtCVFMjbsLTDTsfzDvw0/edit?usp=sharing
